@@ -5,8 +5,6 @@ Created on Fri Aug 24 08:08:44 2018
 @author: Assembly
 """
 
-import pandas as pd
-import oandapyV20
 from oandapyV20 import API
 import oandapyV20.endpoints.accounts as accounts
 
