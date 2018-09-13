@@ -19,20 +19,23 @@ url = 'https://api.powerbi.com/beta/8bf2e8dc-0738-49a0-9278-f0c7c067a1ca/dataset
 
 count = 0
 while(True):
-    total = 0
-    count += 1
-    NAV = []
-    for i in accountIDs:
-        r = accounts.AccountDetails(accountID=i)
-        res = client.request(r)
-        NAV.append(float(res['account']['NAV'])-1000)
-        alias = res['account']['alias']
-    total = sum(NAV)
-    NAV = [ str(round(i,2)) for i in NAV ]
-    current_time = str(datetime.now()).replace(' ','T')[:-3]+'Z'
-    data = '''[{{"datetime" :"{0}","test 1" :{1},"test 2" :{2},"test 3" :{3},"test 4" :{4},"test 5" :{5},"test 6" :{6},"total" :{7}}}]'''.format(current_time,NAV[0],NAV[1],NAV[2],NAV[3],NAV[4],NAV[5],str(round(total,2)))
-    response = requests.post(url, data=data)
-    print(data,response)
+    try:
+        total = 0
+        count += 1
+        NAV = []
+        for i in accountIDs:
+            r = accounts.AccountDetails(accountID=i)
+            res = client.request(r)
+            NAV.append(float(res['account']['NAV'])-1000)
+            alias = res['account']['alias']
+        total = sum(NAV)
+        NAV = [ str(round(i,2)) for i in NAV ]
+        current_time = str(datetime.now()).replace(' ','T')[:-3]+'Z'
+        data = '''[{{"datetime" :"{0}","test 1" :{1},"test 2" :{2},"test 3" :{3},"test 4" :{4},"test 5" :{5},"test 6" :{6},"total" :{7}}}]'''.format(current_time,NAV[0],NAV[1],NAV[2],NAV[3],NAV[4],NAV[5],str(round(total,2)))
+        response = requests.post(url, data=data)
+        print(data,response)
+    except Exception:
+        pass
     time.sleep(59.6)
 
 
